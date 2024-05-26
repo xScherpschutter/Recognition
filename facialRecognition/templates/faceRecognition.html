@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<video id="video" width="640" height="480" autoplay></video>
+<button id="start">Iniciar</button>
+<button id="stop" style="display: none;">Detener</button>
+<button id="snap" style="display: none;">Capturar</button>
+<button id="sendCapture" style="display: none;">Enviar Captura</button>
+<canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+
+{% endblock content %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var video = document.getElementById('video');
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var start = document.getElementById('start');
+        var stop = document.getElementById('stop');
+        var snap = document.getElementById('snap');
+        var sendCapture = document.getElementById('sendCapture');
+
+        start.addEventListener("click", function() {
+            console.log('si')
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+                start.style.display = "none";
+                stop.style.display = "block";
+                snap.style.display = "block";
+            })
+            .catch(function(error) {
+                console.log("Ha ocurrido un error: ", error);
+                alert(error)
+            });
+        });
+
+        stop.addEventListener("click", function() {
+            if (stream) {
+                let tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+            }
+            video.srcObject = null;
+            start.style.display = "block";
+            stop.style.display = "none";
+            snap.style.display = "none";
+            sendCapture.style.display = "none";
+        });
+
+        snap.addEventListener("click", function() {
+            context.drawImage(video, 0, 0, 640, 480);
+            sendCapture.style.display = "block";
+        });
+
+        sendCapture.addEventListener("click", function() {
+            var imageData = canvas.toDataURL('image/png');
+            sendImage(imageData);
+            sendCapture.style.display = 'none';
+        });
+
+        function sendImage(imageData) {
+            console.log("Imagen capturada y enviada:", imageData);
+        }
+    });
+
+</script>
