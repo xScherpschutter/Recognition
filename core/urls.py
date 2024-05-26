@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from facialRecognition.views import IndexView, FaceRecognitionView
+from facialRecognition.views import IndexView, FaceRecognitionView, FaceTrainingView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name = 'index'),
-    path('face/', FaceRecognitionView.as_view(), name = 'face')
+    path('face/', FaceRecognitionView.as_view(), name = 'face'),
+    path('face_training/', FaceTrainingView.as_view(), name = 'face_training')
 ]

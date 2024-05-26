@@ -27,19 +27,34 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     <i class="fa fa-home w3-xxlarge"></i>
     <p>INICIO</p>
   </a> {% endcomment %}
-
-  <a href="#home" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+  {% if request.path == '/'  %}
+  <a href={% url "index" %} class="w3-bar-item w3-button w3-padding-large w3-black">
     <i class="fa fa-home w3-xxlarge"></i>
     <p>INICIO</p>
   </a>
-  <a href= {% url "face" %} class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+  {% else %}
+  <a href={% url "index" %} class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-home w3-xxlarge"></i>
+    <p>INICIO</p>
+  </a>
+  {% endif %}
+
+  <a href="#plate" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
     <i class="fa fa-car w3-xxlarge"></i>
     <p>RECONOCIMIENTO DE PLACA</p>
   </a>
-  <a href="#facial" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+
+  {% if request.path == '/face/'  %}
+  <a href= {% url "face" %} class="w3-bar-item w3-button w3-padding-large w3-black">
     <i class="fa fa-users w3-xxlarge"></i>
     <p>RECONOCIMIENTO FACIAL</p>
   </a>
+  {% else %}
+  <a href= {% url "face" %} class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-users w3-xxlarge"></i>
+    <p>RECONOCIMIENTO FACIAL</p>
+  </a>
+  {% endif %}
 </nav>
 
 <!-- Navbar on small screens (Hidden on medium and large screens) -->
@@ -60,8 +75,8 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     <p>Photographer and Web Designer.</p>
     <img src="/w3images/man_smoke.jpg" alt="boy" class="w3-image" width="992" height="1108">
   </header> {% endcomment %}
-
-  {% comment %} <!-- About Section -->
+  {% if request.path == '/'  %}
+   <!-- About Section -->
   <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
     <h2 class="w3-text-light-grey">My Name</h2>
     <hr style="width:200px" class="w3-opacity">
@@ -101,7 +116,8 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
         Meetings
       </div>
     </div>
-
+    {% endif %}
+    {% comment %}
     <button class="w3-button w3-light-grey w3-padding-large w3-section">
       <i class="fa fa-download"></i> Download Resume
     </button>

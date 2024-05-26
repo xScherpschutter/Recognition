@@ -1,6 +1,9 @@
 asgiref==3.8.1
 backports.zoneinfo==0.2.1
 Django==4.2.13
+imutils==0.5.4
+numpy==1.24.4
+opencv-contrib-python==4.9.0.80
 sqlparse==0.5.0
 typing-extensions==4.12.0
 tzdata==2024.1
