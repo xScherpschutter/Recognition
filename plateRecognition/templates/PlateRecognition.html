@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href={% static 'css/face.css' %}>
+
+<div class="container center-container" data-aos="fade-up">
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+</div>
+
+<div class="w3-container">
+    <table class="w3-table w3-hoverable w3-centered w3-card-4"">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Placa</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock content %}
+
+{% block script %}
+<script src = {% static 'js/plates.js' %}> </script>
+{% endblock script %}
+
