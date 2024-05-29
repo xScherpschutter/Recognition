@@ -20,22 +20,14 @@ async function processStream(url) {
         for (let i = 0; i < parts.length - 1; i++) {
             const part = parts[i];
 
-            if (part.includes('Content-Type: image/jpeg')) {
-                const imgPart = part.split('Content-Type: image/jpeg\r\n\r\n')[1];
-                if (imgPart) {
-                    const imgContent = imgPart.split('\r\n\r\n')[0];
-                    // console.log(imgContent)
-                    // Falta el renderizado del frame en tiempo real
-                }
-            }
-
-
             if (part.includes('Content-Type: text/plain')) {
                 const textPart = part.split('Content-Type: text/plain\r\n\r\n')[1];
                 if (textPart) {
-                    const textContent = textPart.split('\r\n\r\n')[0];
-
-                        handleText(textContent)
+                    const text = textPart.split('\r\n\r\n')[0];
+                    const textContent = text.split('|')[0];
+                    const dateSpanish = text.split('|')[1];
+                    const registerContent = text.split('|')[2];
+                    appendToTable(textContent, dateSpanish, registerContent)
 
                 }
             }
@@ -45,14 +37,8 @@ async function processStream(url) {
 }
 
 
-
-function handleText(text) {
-    appendToTable(text);
-}
-
-function appendToTable(text) {
+function appendToTable(text, date_format, register) {
     var table = document.querySelector('table').getElementsByTagName('tbody')[0];
-    
     var lastRow = table.rows[0];
 
     if (text == '') {
@@ -65,40 +51,17 @@ function appendToTable(text) {
     
     var newRow = table.insertRow(0);
     
-
-    const new_date = new Date();
-    const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-    };
-    const dateSpanish = new_date.toLocaleDateString('es-ES', options);
-
     var date = newRow.insertCell(0);
     var textCell = newRow.insertCell(1);
+    var registerCell = newRow.insertCell(2);
 
-    date.innerHTML = dateSpanish;
+    date.innerHTML = date_format;
     textCell.textContent = text;
+    registerCell.innerHTML = register;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     
     processStream("/video_stream/");
-
-    // var video = document.getElementById('video');
-
-    // navigator.mediaDevices.getUserMedia({ video: true })
-    // .then(function(stream) {
-    //     video.srcObject = stream;
-        
-    // })
-    // .catch(function(error) {
-    //     console.log("Ha ocurrido un error: ", error);
-    //     alert(error)
-    // });
-    
-    
+ 
 });

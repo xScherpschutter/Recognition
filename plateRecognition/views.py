@@ -11,16 +11,6 @@ class PlateView(View):
     
     def get(self, request):
         return render(request, self.template_name, context ={})
-
-# def gen(camera):
-#     while True:
-#         ret, frame = camera.read()
-#         if not ret:
-#             break
-#         _, jpeg = cv2.imencode('.jpg', frame)
-#         frame = jpeg.tobytes()
-#         yield (b'--frame\r\n'
-#                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
         
 @gzip.gzip_page        
 def video_stream(request):
